@@ -1,9 +1,64 @@
-const butao = document.querySelector("#butao")
-const limpar = document.querySelector("#clear")
+const butao1 = document.querySelector("#butao1")
+const butao2 = document.querySelector("#butao2")
+const butao3 = document.querySelector("#butao3")
+const butao4 = document.querySelector("#butao4")
+const butao5 = document.querySelector("#butao5")
+// const butao6 = document.querySelector("#butao6")
+// const butao7 = document.querySelector("#butao7")
+// const butao8 = document.querySelector("#butao8")
+// const butao9 = document.querySelector("#butao9")
+// const butao10 = document.querySelector("#butao10")
 
-limpar.onclick = () => {
-  document.querySelector("#resultado").innerHTML = ""
+const limpar1 = document.querySelector("#clear1")
+const limpar2 = document.querySelector("#clear2")
+const limpar3 = document.querySelector("#clear3")
+const limpar4 = document.querySelector("#clear4")
+const limpar5 = document.querySelector("#clear5")
+// const limpar6 = document.querySelector("#clear6")
+// const limpar7 = document.querySelector("#clear7")
+// const limpar8 = document.querySelector("#clear8")
+// const limpar9 = document.querySelector("#clear9")
+// const limpar10 = document.querySelector("#clear10")
+
+limpar1.onclick = () => {
+  document.querySelector("#resultado1").innerHTML = ""
 }
+
+limpar2.onclick = () => {
+  document.querySelector("#resultado2").innerHTML = ""
+}
+
+limpar3.onclick = () => {
+  document.querySelector("#resultado3").innerHTML = ""
+}
+
+limpar4.onclick = () => {
+  document.querySelector("#resultado4").innerHTML = ""
+}
+
+limpar5.onclick = () => {
+  document.querySelector("#resultado5").innerHTML = ""
+}
+
+// limpar6.onclick = () => {
+//   document.querySelector("#resultado6").innerHTML = ""
+// }
+
+// limpar7.onclick = () => {
+//   document.querySelector("#resultado7").innerHTML = ""
+// }
+
+// limpar8.onclick = () => {
+//   document.querySelector("#resultado8").innerHTML = ""
+// }
+
+// limpar9.onclick = () => {
+//   document.querySelector("#resultado9").innerHTML = ""
+// }
+
+// limpar10.onclick = () => {
+//   document.querySelector("#resultado10").innerHTML = ""
+// }
 
 const pegaFrase = (seletor) => document.querySelector(seletor).value
 
@@ -23,12 +78,12 @@ const escreveFrase = (frase, seletor) => {
 }
 
 const questao1 = () => {
-  let fraseQuestao1 = pegaFrase("#frase").split(" ")
+  let fraseQuestao1 = pegaFrase("#frase1").split(" ")
   let fraseQuestao1Invertida = inverteFrase(fraseQuestao1)
-  escreveFrase(`Questão 1: ${fraseQuestao1Invertida.join(" ")}`, "#resultado")
+  escreveFrase(`${fraseQuestao1Invertida.join(" ")}`, "#resultado1")
 }
 
-butao.addEventListener("click", questao1)
+butao1.addEventListener("click", questao1)
 
 const temVogal = (frase) => {
   let vogalNegrito = []
@@ -52,12 +107,12 @@ const temVogal = (frase) => {
 }
 
 const questao2 = () => {
-  let fraseQuestao2 = pegaFrase("#frase").split(" ")
+  let fraseQuestao2 = pegaFrase("#frase2").split(" ")
   let fraseNegrito = temVogal(fraseQuestao2)
-  escreveFrase(`Questão 2: ${fraseNegrito.join(" ")}`, "#resultado")
+  escreveFrase(`${fraseNegrito.join(" ")}`, "#resultado2")
 }
 
-butao.addEventListener("click", questao2)
+butao2.addEventListener("click", questao2)
 
 const contaPalavra = (frase) => {
   contador = {}
@@ -83,13 +138,75 @@ const criaTabela = (contador) => {
 
   tabela += "</table>"
 
-  document.querySelector("#resultado").innerHTML += "Questão 3" + tabela
+  document.querySelector("#resultado3").innerHTML += tabela
 }
 
 const questao3 = () => {
-  const fraseQuestao3 = pegaFrase("#frase").split(" ")
+  const fraseQuestao3 = pegaFrase("#frase3").split(" ")
   const palavrasRepetidas = contaPalavra(fraseQuestao3)
   criaTabela(palavrasRepetidas)
 }
 
-butao.addEventListener("click", questao3)
+butao3.addEventListener("click", questao3)
+
+const maiorOcorrencia = (frase) => {
+  const fraseOcorrencia = frase.split(" ")
+  const objOcorrencias = contaPalavra(fraseOcorrencia)
+  const ocorrencias = Object.entries(objOcorrencias)
+
+  let maiorQtd = 0
+  let maiorPalavra
+  for (let i = 0; i < ocorrencias.length; i++) {
+    if (maiorQtd < ocorrencias[i][1]) {
+      maiorQtd = ocorrencias[i][1]
+      maiorPalavra = ocorrencias[i][0]
+    }
+  }
+
+  return [maiorPalavra, maiorQtd]
+}
+
+const questao4 = () => {
+  const fraseQuestao4 = pegaFrase("#frase4")
+  const [palavraQuestao4, qtdQuestao4] = maiorOcorrencia(fraseQuestao4)
+  escreveFrase(
+    `Maior ocorrência = ${palavraQuestao4}, Ocorrências: ${qtdQuestao4}`,
+    "#resultado4"
+  )
+}
+
+butao4.addEventListener("click", questao4)
+
+const substitui = (frase, palavraProcurada, palavraSubstituicao) => {
+  const fraseSubstitui = frase.split(" ")
+
+  for (let i = 0; i < fraseSubstitui.length; i++) {
+    if (fraseSubstitui[i] == palavraProcurada) {
+      fraseSubstitui[i] = palavraSubstituicao
+    }
+  }
+
+  return fraseSubstitui
+}
+
+const questao5 = () => {
+  let fraseQuestao5 = pegaFrase("#frase5")
+  if (fraseQuestao5 === "")
+    fraseQuestao5 = document.querySelector("#resultado5").innerText.split(" ")
+
+  const procurar = pegaFrase("#procurar5")
+  const substituir = pegaFrase("#substituir5")
+  if (fraseQuestao5 != "" && procurar == "" && substituir == "") {
+    escreveFrase(fraseQuestao5, "#resultado5")
+    return
+  } else if (fraseQuestao5 == "" && procurar != "" && substituir != "") {
+    const fraseAntiga = document
+      .querySelector("#resultado5")
+      .innerText.split(" ")
+    const fraseNova = substitui(fraseAntiga, procurar, substituir)
+    escreveFrase(fraseNova, "#resultado5")
+    return
+  }
+}
+
+butao5.addEventListener("click", questao5)
