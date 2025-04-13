@@ -23,6 +23,10 @@ body div {
   gap: 10px;
 }
 
+p {
+  text-align: center;
+}
+
 button {
   background-color: #f7e018;
   border-radius: 10px;

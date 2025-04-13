@@ -4,10 +4,10 @@ const butao3 = document.querySelector("#butao3")
 const butao4 = document.querySelector("#butao4")
 const butao5 = document.querySelector("#butao5")
 const butao6 = document.querySelector("#butao6")
-// const butao7 = document.querySelector("#butao7")
-// const butao8 = document.querySelector("#butao8")
-// const butao9 = document.querySelector("#butao9")
-// const butao10 = document.querySelector("#butao10")
+const butao7 = document.querySelector("#butao7")
+const butao8 = document.querySelector("#butao8")
+const butao9 = document.querySelector("#butao9")
+const butao10 = document.querySelector("#butao10")
 
 const limpar1 = document.querySelector("#clear1")
 const limpar2 = document.querySelector("#clear2")
@@ -15,10 +15,10 @@ const limpar3 = document.querySelector("#clear3")
 const limpar4 = document.querySelector("#clear4")
 const limpar5 = document.querySelector("#clear5")
 const limpar6 = document.querySelector("#clear6")
-// const limpar7 = document.querySelector("#clear7")
-// const limpar8 = document.querySelector("#clear8")
-// const limpar9 = document.querySelector("#clear9")
-// const limpar10 = document.querySelector("#clear10")
+const limpar7 = document.querySelector("#clear7")
+const limpar8 = document.querySelector("#clear8")
+const limpar9 = document.querySelector("#clear9")
+const limpar10 = document.querySelector("#clear10")
 
 limpar1.onclick = () => {
   document.querySelector("#resultado1").innerHTML = ""
@@ -46,21 +46,21 @@ limpar6.onclick = () => {
   document.querySelector("#resultado6").innerHTML = ""
 }
 
-// limpar7.onclick = () => {
-//   document.querySelector("#resultado7").innerHTML = ""
-// }
+limpar7.onclick = () => {
+  document.querySelector("#resultado7").innerHTML = ""
+}
 
-// limpar8.onclick = () => {
-//   document.querySelector("#resultado8").innerHTML = ""
-// }
+limpar8.onclick = () => {
+  document.querySelector("#resultado8").innerHTML = ""
+}
 
-// limpar9.onclick = () => {
-//   document.querySelector("#resultado9").innerHTML = ""
-// }
+limpar9.onclick = () => {
+  document.querySelector("#resultado9").innerHTML = ""
+}
 
-// limpar10.onclick = () => {
-//   document.querySelector("#resultado10").innerHTML = ""
-// }
+limpar10.onclick = () => {
+  document.querySelector("#resultado10").innerHTML = ""
+}
 
 const pegaFrase = (seletor) => document.querySelector(seletor).value
 
@@ -271,3 +271,160 @@ const questao6 = () => {
 }
 
 butao6.addEventListener("click", questao6)
+
+const senhaForte = (senha) => {
+  let maiusculas = /[A-Z]/.test(senha)
+  let minusculas = /[a-z]/.test(senha)
+  let numeros = /[0-9]/.test(senha)
+  let especiais = /[@, #, !, $, %, &, *, (, ), -, +, ., =]/.test(senha)
+
+  const resultado = document.querySelector("#resultado7")
+  let nivel
+  let cor
+  if (maiusculas == 0 || minusculas == 0) {
+    nivel = "Coloque no mínimo letras maiúsculas e minúsculas"
+    cor = "#ff0"
+  } else if (numeros == 0) {
+    nivel = "Senha fraca"
+    cor = "#f22"
+  } else if (especiais == 0) {
+    nivel = "Senha moderada"
+    cor = "#f70"
+  } else {
+    nivel = "Senha forte"
+    cor = "#5f5"
+  }
+
+  resultado.textContent = nivel
+  resultado.style.color = cor
+}
+
+const questao7 = () => {
+  const senhaQuestao7 = pegaFrase("#frase7")
+  senhaForte(senhaQuestao7)
+}
+
+butao7.addEventListener("click", questao7)
+
+const tenisPolar = (frase) => {
+  const fraseOriginal = frase.split("")
+  let novaFrase = []
+
+  for (let i = 0; i < fraseOriginal.length; i++) {
+    switch (fraseOriginal[i]) {
+      case "t":
+        novaFrase[i] = "p"
+        break
+      case "T":
+        novaFrase[i] = "P"
+        break
+      case "e":
+        novaFrase[i] = "o"
+        break
+      case "E":
+        novaFrase[i] = "O"
+        break
+      case "n":
+        novaFrase[i] = "l"
+        break
+      case "N":
+        novaFrase[i] = "L"
+        break
+      case "i":
+        novaFrase[i] = "a"
+        break
+      case "I":
+        novaFrase[i] = "A"
+        break
+      case "s":
+        novaFrase[i] = "r"
+        break
+      case "S":
+        novaFrase[i] = "R"
+        break
+      case "p":
+        novaFrase[i] = "t"
+        break
+      case "P":
+        novaFrase[i] = "T"
+        break
+      case "o":
+        novaFrase[i] = "e"
+        break
+      case "O":
+        novaFrase[i] = "E"
+        break
+      case "l":
+        novaFrase[i] = "n"
+        break
+      case "L":
+        novaFrase[i] = "N"
+        break
+      case "a":
+        novaFrase[i] = "i"
+        break
+      case "A":
+        novaFrase[i] = "I"
+        break
+      case "r":
+        novaFrase[i] = "s"
+        break
+      case "R":
+        novaFrase[i] = "S"
+        break
+      default:
+        novaFrase[i] = fraseOriginal[i]
+    }
+  }
+  return novaFrase.join("")
+}
+
+const questao8 = () => {
+  const fraseQuestao8 = pegaFrase("#frase8")
+  const resultado = tenisPolar(fraseQuestao8)
+  escreveFrase(resultado, "#resultado8")
+}
+
+butao8.addEventListener("click", questao8)
+
+const tempoDeVida = (dia, mes, ano) => {
+  const nasc = new Date(`${ano}-${mes}-${dia}`)
+  const hoje = new Date()
+
+  let resultado = hoje - nasc
+  resultado /= 1000 * 60 * 60 * 24
+
+  return Math.floor(resultado)
+}
+
+const questao9 = () => {
+  let dataDeNasc = pegaFrase("#frase9")
+  dataDeNasc = dataDeNasc.split("/")
+  const dia = dataDeNasc[0]
+  const mes = dataDeNasc[1]
+  const ano = dataDeNasc[2]
+  const resultado = tempoDeVida(dia, mes, ano)
+  escreveFrase(`${resultado} dias de vida`, "#resultado9")
+}
+
+butao9.addEventListener("click", questao9)
+
+const tempoDistancia = (inicio, fim) => {
+  inicio = new Date(inicio)
+  fim = new Date(fim)
+
+  resultado = fim - inicio
+  resultado /= 1000 * 60 * 60 * 24
+  resultado /= 7
+
+  return Math.trunc(resultado)
+}
+
+const questao10 = () => {
+  const inicio = document.querySelector("#data1").value
+  const fim = document.querySelector("#data2").value
+  const resultado = tempoDistancia(inicio, fim)
+  escreveFrase(`${resultado} semanas`, "#resultado10")
+}
+
+butao10.addEventListener("click", questao10)
