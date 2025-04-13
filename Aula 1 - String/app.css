@@ -44,3 +44,7 @@ input {
   padding: 5px;
   border-radius: 15px;
 }
+
+#substituir {
+  display: none;
+}

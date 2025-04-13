@@ -3,7 +3,7 @@ const butao2 = document.querySelector("#butao2")
 const butao3 = document.querySelector("#butao3")
 const butao4 = document.querySelector("#butao4")
 const butao5 = document.querySelector("#butao5")
-// const butao6 = document.querySelector("#butao6")
+const butao6 = document.querySelector("#butao6")
 // const butao7 = document.querySelector("#butao7")
 // const butao8 = document.querySelector("#butao8")
 // const butao9 = document.querySelector("#butao9")
@@ -14,7 +14,7 @@ const limpar2 = document.querySelector("#clear2")
 const limpar3 = document.querySelector("#clear3")
 const limpar4 = document.querySelector("#clear4")
 const limpar5 = document.querySelector("#clear5")
-// const limpar6 = document.querySelector("#clear6")
+const limpar6 = document.querySelector("#clear6")
 // const limpar7 = document.querySelector("#clear7")
 // const limpar8 = document.querySelector("#clear8")
 // const limpar9 = document.querySelector("#clear9")
@@ -38,11 +38,13 @@ limpar4.onclick = () => {
 
 limpar5.onclick = () => {
   document.querySelector("#resultado5").innerHTML = ""
+  document.querySelector("#frase5").style.display = "block"
+  document.querySelector("#substituir").style.display = "none"
 }
 
-// limpar6.onclick = () => {
-//   document.querySelector("#resultado6").innerHTML = ""
-// }
+limpar6.onclick = () => {
+  document.querySelector("#resultado6").innerHTML = ""
+}
 
 // limpar7.onclick = () => {
 //   document.querySelector("#resultado7").innerHTML = ""
@@ -186,27 +188,86 @@ const substitui = (frase, palavraProcurada, palavraSubstituicao) => {
     }
   }
 
-  return fraseSubstitui
+  return fraseSubstitui.join(" ")
 }
 
 const questao5 = () => {
-  let fraseQuestao5 = pegaFrase("#frase5")
-  if (fraseQuestao5 === "")
-    fraseQuestao5 = document.querySelector("#resultado5").innerText.split(" ")
+  let fraseQuestao5 = document.querySelector("#frase5")
+  const divQuestao5 = document.querySelector("#substituir")
 
-  const procurar = pegaFrase("#procurar5")
-  const substituir = pegaFrase("#substituir5")
-  if (fraseQuestao5 != "" && procurar == "" && substituir == "") {
-    escreveFrase(fraseQuestao5, "#resultado5")
-    return
-  } else if (fraseQuestao5 == "" && procurar != "" && substituir != "") {
-    const fraseAntiga = document
-      .querySelector("#resultado5")
-      .innerText.split(" ")
-    const fraseNova = substitui(fraseAntiga, procurar, substituir)
-    escreveFrase(fraseNova, "#resultado5")
-    return
+  if (fraseQuestao5.style.display != "none") {
+    fraseSalva = fraseQuestao5.value
+    escreveFrase(fraseSalva, "#resultado5")
+    fraseQuestao5.style.display = "none"
+    divQuestao5.style.display = "flex"
+  } else {
+    const procurar = document.querySelector("#procurar5").value
+    const substituir = document.querySelector("#substituir5").value
+
+    fraseSalva = substitui(fraseSalva, procurar, substituir)
+    escreveFrase(fraseSalva, "#resultado5")
   }
 }
 
 butao5.addEventListener("click", questao5)
+
+const mesPorExtenso = (mes) => {
+  let resultado
+  switch (parseInt(mes, 10)) {
+    case 1:
+      resultado = "janeiro"
+      break
+    case 2:
+      resultado = "fevereiro"
+      break
+    case 3:
+      resultado = "março"
+      break
+    case 4:
+      resultado = "abril"
+      break
+    case 5:
+      resultado = "maio"
+      break
+    case 6:
+      resultado = "junho"
+      break
+    case 7:
+      resultado = "julho"
+      break
+    case 8:
+      resultado = "agosto"
+      break
+    case 9:
+      resultado = "setembro"
+      break
+    case 10:
+      resultado = "outubro"
+      break
+    case 11:
+      resultado = "novembro"
+      break
+    case 12:
+      resultado = "dezembro"
+      break
+    default:
+      resultado = `${mes}`
+  }
+
+  return resultado
+}
+
+const dataPorExtenso = (data) => {
+  const dataArray = data.split("/")
+  const resultado = `Dia ${dataArray[0]} de ${mesPorExtenso(dataArray[1])} de ${
+    dataArray[2]
+  }`
+  return resultado
+}
+
+const questao6 = () => {
+  const dataQuestao6 = pegaFrase("#frase6")
+  escreveFrase(dataPorExtenso(dataQuestao6), "#resultado6")
+}
+
+butao6.addEventListener("click", questao6)
