@@ -1,0 +1,53 @@
+* {
+  font-family: monospace;
+  color: #fff;
+}
+
+body {
+  background-color: #050505;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+h1 {
+  color: #f7e018;
+  grid-column: span 3;
+  height: fit-content;
+}
+
+button {
+  background-color: #f7e018;
+  border-radius: 10px;
+  width: max-content;
+  padding: 5px;
+}
+
+button:active {
+  background-color: #fe1c;
+}
+
+textarea {
+  background-color: #fff2;
+  border: #fff 1px solid;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  height: max-content;
+  align-items: center;
+  justify-content: center;
+}
+
+div > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
