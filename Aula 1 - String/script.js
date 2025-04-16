@@ -48,6 +48,9 @@ limpar6.onclick = () => {
 
 limpar7.onclick = () => {
   document.querySelector("#resultado7").innerHTML = ""
+  document.querySelector("#barraprogresso").style.backgroundColor =
+    "transparent"
+  document.querySelector("#barraprogresso").style.width = "0"
 }
 
 limpar8.onclick = () => {
@@ -278,25 +281,34 @@ const senhaForte = (senha) => {
   let numeros = /[0-9]/.test(senha)
   let especiais = /[@, #, !, $, %, &, *, (, ), -, +, ., =]/.test(senha)
 
+  const barra = document.querySelector("#barraprogresso")
+
   const resultado = document.querySelector("#resultado7")
   let nivel
   let cor
+  let largura
   if (maiusculas == 0 || minusculas == 0) {
     nivel = "Coloque no mínimo letras maiúsculas e minúsculas"
     cor = "#ff0"
+    largura = "0%"
   } else if (numeros == 0) {
     nivel = "Senha fraca"
     cor = "#f22"
+    largura = "25%"
   } else if (especiais == 0) {
     nivel = "Senha moderada"
     cor = "#f70"
+    largura = "50%"
   } else {
     nivel = "Senha forte"
     cor = "#5f5"
+    largura = "100%"
   }
 
   resultado.textContent = nivel
   resultado.style.color = cor
+  barra.style.backgroundColor = cor
+  barra.style.width = largura
 }
 
 const questao7 = () => {

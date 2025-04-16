@@ -47,3 +47,16 @@ input {
 #substituir {
   display: none;
 }
+
+#barra {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+#barraprogresso {
+  height: 10px;
+  margin: 0 30px;
+  transition: 0.3s ease-out;
+}
