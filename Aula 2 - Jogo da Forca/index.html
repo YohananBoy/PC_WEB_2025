@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jogo da Forca</title>
+    <link rel="stylesheet" href="app.css" />
     <script src="script.js" defer></script>
-</head>
-<body>
-    <ul id="lista"></ul>
-</body>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Jogo da Forca</h1>
+      <div id="display">
+        <ul id="lista"></ul>
+      </div>
+
+      <div id="controle"></div>
+
+      <div id="resposta">
+        <input type="text" id="tentativa" placeholder="Letra ou Palavra" />
+        <button id="btn">Tentar</button>
+      </div>
+    </div>
+  </body>
 </html>
