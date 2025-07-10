@@ -114,3 +114,31 @@ const questao2 = () => {
 }
 
 butao2.addEventListener("click", questao2)
+
+const butao3 = document.querySelector("#butao3")
+
+const limpar3 = document.querySelector("#clear3")
+
+limpar3.onclick = () => {
+  document.querySelector("#resultado3").innerHTML = ""
+}
+
+const numerosRomanos = [
+  [1000, "M"],
+  [900, "CM"],
+  [500, "D"],
+  [400, "CD"],
+  [100, "C"],
+  [90, "XC"],
+  [50, "L"],
+  [40, "XL"],
+  [10, "X"],
+  [9, "IX"],
+  [5, "V"],
+  [4, "IV"],
+  [1, "I"],
+]
+
+const decRomano = (num) => {
+  numerosRomanos.forEach((numero) => {})
+}

@@ -1,0 +1,122 @@
+:root {
+  --cor-fundo-geral: #0a3d72;
+  --cor-cabecalho-rodape: #1464a0;
+  --cor-botoes-acao: #e50914;
+  --cor-texto-fundo-escuro: #ffffff;
+  --cor-fundo-conteudo: #f5f5f5;
+  --cor-texto-fundo-claro: #333333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  list-style: none;
+}
+
+body {
+  background-color: var(--cor-fundo-geral);
+  color: var(--cor-texto-fundo-escuro);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: var(--cor-cabecalho-rodape);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.3);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--cor-texto-fundo-escuro);
+  letter-spacing: 2px;
+}
+
+header img {
+  height: 70px;
+}
+
+main {
+  flex-grow: 1;
+  padding: 2rem;
+  background-color: var(--cor-fundo-geral);
+}
+
+#filmesLista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+#filmesLista > li {
+  background-color: var(--cor-fundo-conteudo);
+  color: var(--cor-texto-fundo-claro);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.15);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+#filmesLista > li:hover {
+  transform: scale(1.03);
+}
+
+#filmesLista img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  object-fit: cover;
+}
+
+#filmesLista h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--cor-fundo-geral);
+}
+
+#filmesLista p {
+  font-size: 1rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+ul.lista-generos,
+ul.lista-titulos-semelhantes,
+ul.lista-elenco {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  color: var(--cor-texto-fundo-claro);
+  font-size: 0.9rem;
+  background-color: #0a3d7255;
+  border-radius: 10px;
+}
+
+ul.lista-generos > li:first-child h3,
+ul.lista-titulos-semelhantes > li:first-child h3,
+ul.lista-elenco > li:first-child h3 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--cor-cabecalho-rodape);
+}
