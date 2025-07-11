@@ -22,9 +22,13 @@ objetoHTTPRequest.onreadystatechange = function () {
         titulo.textContent = elemento.titulo
         liObj.appendChild(titulo)
 
+        const detalhes = document.createElement("div")
+        detalhes.classList.add("detalhes")
+        liObj.appendChild(detalhes)
+
         const resumo = document.createElement("p")
         resumo.textContent = elemento.resumo
-        liObj.appendChild(resumo)
+        detalhes.appendChild(resumo)
 
         const generos = document.createElement("ul")
         generos.classList.add("lista-generos")
@@ -38,7 +42,7 @@ objetoHTTPRequest.onreadystatechange = function () {
           generoLi.textContent = genero
           generos.appendChild(generoLi)
         })
-        liObj.appendChild(generos)
+        detalhes.appendChild(generos)
 
         const titulosSemelhantes = document.createElement("ul")
         titulosSemelhantes.classList.add("lista-titulos-semelhantes")
@@ -53,7 +57,7 @@ objetoHTTPRequest.onreadystatechange = function () {
           semelhanteLi.textContent = filmeSemelhante.titulo
           titulosSemelhantes.appendChild(semelhanteLi)
         })
-        liObj.appendChild(titulosSemelhantes)
+        detalhes.appendChild(titulosSemelhantes)
 
         const elenco = document.createElement("ul")
         elenco.classList.add("lista-elenco")
@@ -67,7 +71,7 @@ objetoHTTPRequest.onreadystatechange = function () {
           membroLi.textContent = membro
           elenco.appendChild(membroLi)
         })
-        liObj.appendChild(elenco)
+        detalhes.appendChild(elenco)
 
         const containerListas = document.createElement("div")
         containerListas.classList.add("container")
@@ -75,10 +79,13 @@ objetoHTTPRequest.onreadystatechange = function () {
         containerListas.appendChild(titulosSemelhantes)
         containerListas.appendChild(elenco)
 
-        liObj.appendChild(containerListas)
-      })
+        detalhes.appendChild(containerListas)
 
+        liObj.style.cursor = "pointer"
+        liObj.addEventListener("click", () => {
+          detalhes.classList.toggle("ativo")
+        })
+      })
     }
   }
 }
-
