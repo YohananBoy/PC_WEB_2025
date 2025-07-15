@@ -16,7 +16,7 @@ const buscarPokemon = () => {
         divPokemon.innerHTML = ""
 
         const nome = document.createElement("h2")
-        nome.textContent = pokemon.name.toUpperCase()
+        nome.textContent = pokemon.name.toUpperCase() + " #" + pokemon.id
         divPokemon.appendChild(nome)
 
         const figura = document.createElement("img")
@@ -113,44 +113,99 @@ const buscarPokemon = () => {
         divMoves.appendChild(moves)
 
         const movesPorJogo = {}
+        let movimentosCarregados = 0
+        const totalMovimentos = pokemon.moves.length
 
         pokemon.moves.forEach((elemento) => {
           const nomeMove = elemento.move.name
+          const urlMove = elemento.move.url
 
-          elemento.version_group_details.forEach((versao) => {
-            const jogo = versao.version_group.name
-            const nivel = versao.level_learned_at
-            const metodo = versao.move_learn_method.name
+          const req = new XMLHttpRequest()
+          req.open("GET", urlMove)
+          req.send()
 
-            if (!movesPorJogo[jogo]) {
-              movesPorJogo[jogo] = []
+          req.onreadystatechange = function () {
+            if (req.readyState === 4 && req.status === 200) {
+              const dadosMove = JSON.parse(req.responseText)
+
+              elemento.version_group_details.forEach((versao) => {
+                const jogo = versao.version_group.name
+                const nivel = versao.level_learned_at
+                const metodo = versao.move_learn_method.name
+
+                if (!movesPorJogo[jogo]) {
+                  movesPorJogo[jogo] = []
+                }
+
+                movesPorJogo[jogo].push({
+                  nome: nomeMove,
+                  nivel: nivel,
+                  metodo: metodo,
+                  power: dadosMove.power,
+                  accuracy: dadosMove.accuracy,
+                  pp: dadosMove.pp,
+                  priority: dadosMove.priority,
+                  classe: dadosMove.damage_class.name,
+                  tipo: dadosMove.type.name,
+                })
+              })
+
+              movimentosCarregados++
+              if (movimentosCarregados === totalMovimentos) {
+                mostrarTabelas()
+              }
             }
-
-            movesPorJogo[jogo].push({
-              nome: nomeMove,
-              nivel: nivel,
-              metodo: metodo,
-            })
-          })
+          }
         })
 
-        for (const jogo in movesPorJogo) {
-          const divMoveJogo = document.createElement("div")
-          const tituloJogo = document.createElement("h4")
-          tituloJogo.textContent = jogo
-          divMoveJogo.appendChild(tituloJogo)
+        function mostrarTabelas() {
+          for (const jogo in movesPorJogo) {
+            const tituloJogo = document.createElement("h4")
+            tituloJogo.textContent = jogo
+            divMoves.appendChild(tituloJogo)
 
-          const listaMoves = document.createElement("ul")
+            const tabela = document.createElement("table")
+            tabela.classList.add("tabela-moves")
 
-          movesPorJogo[jogo].forEach((move) => {
-            const li = document.createElement("li")
-            li.textContent = `${move.nome} | Nível: ${move.nivel} | Método: ${move.metodo}`
-            listaMoves.appendChild(li)
-          })
+            const thead = document.createElement("thead")
+            thead.innerHTML = `
+      <tr>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Classe</th>
+        <th>Power</th>
+        <th>Accuracy</th>
+        <th>PP</th>
+        <th>Priority</th>
+        <th>Nível</th>
+        <th>Método</th>
+      </tr>
+    `
+            tabela.appendChild(thead)
 
-          divMoveJogo.appendChild(listaMoves)
-          moves.appendChild(divMoveJogo)
+            const tbody = document.createElement("tbody")
+
+            movesPorJogo[jogo].forEach((move) => {
+              const linha = document.createElement("tr")
+              linha.innerHTML = `
+        <td>${move.nome}</td>
+        <td>${move.tipo}</td>
+        <td>${move.classe}</td>
+        <td>${move.power ?? "-"}</td>
+        <td>${move.accuracy ?? "-"}</td>
+        <td>${move.pp ?? "-"}</td>
+        <td>${move.priority}</td>
+        <td>${move.nivel}</td>
+        <td>${move.metodo}</td>
+      `
+              tbody.appendChild(linha)
+            })
+
+            tabela.appendChild(tbody)
+            divMoves.appendChild(tabela)
+          }
         }
+
         divPokemon.appendChild(divMoves)
       } else {
         alert("Pokémon não encontrado!")
