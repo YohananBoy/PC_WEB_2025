@@ -42,6 +42,28 @@ button#btnSubmit {
   transition: background-color 0.2s;
 }
 
+.sugestoes {
+  list-style: none;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  background: white;
+  width: 200px;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+}
+
+.sugestoes li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.sugestoes li:hover {
+  background-color: #f0f0f0;
+}
+
 button#btnSubmit:hover {
   background-color: #3a4fcc;
 }
