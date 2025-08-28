@@ -60,6 +60,16 @@
                 preco: 17
             }
         ]
+
+        const listaProdutos = () => {
+            const listaCardapio = document.getElementById("listaCardapio")
+            produtos.forEach((produto) => {
+                let nome = produto.nome
+                const li = document.createElement("li")
+                li.textContent = nome
+                listaCardapio.appendChild(li)
+            }) 
+        }
     </script>
 </body>
 
