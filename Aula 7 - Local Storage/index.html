@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xablauu</title>
+</head>
+
+<body>
+    <input type="color" id="bgcolor" placeholder="Digite uma cor">
+    <input type="text" id="font" placeholder="Digite uma fonte">
+    <input type="url" id="img" placeholder="Insira uma imagem">
+    <button id="btn">Salvar</button>
+
+    <p id="p">opa eu sou top ASDJANDJ</p>
+    <img src="" alt="">
+
+    <script defer>
+        const salvarEstilo = () => {
+            localStorage.setItem("bgcolor", document.getElementById('bgcolor').value)
+            localStorage.setItem("font", document.getElementById('font').value)
+            localStorage.setItem("image", document.getElementById('img').value)
+        }
+
+        const pegarEstilo = () => {
+            document.body.style.backgroundColor = localStorage.getItem("bgcolor")
+            document.querySelector("p").style.fontFamily = localStorage.getItem("font")
+            document.querySelector("img").setAttribute("src", localStorage.getItem("image"))
+        }
+
+        const botaotop = () => {
+            pegarEstilo()
+            salvarEstilo()
+        }
+        
+        const p = document.getElementById("p")
+        p.textContent += ` Fonte: ${localStorage.getItem("font")} Cor: ${localStorage.getItem("bgcolor")}`
+        
+        const btn = document.getElementById("btn")
+        btn.addEventListener("click", botaotop)
+        pegarEstilo()
+</script>
+</body>
+
+</html>

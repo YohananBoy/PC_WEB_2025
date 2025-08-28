@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cefeteria</title>
+    <style>
+        main {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Cefeteria</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Cardápio</h2>
+            <ul id="listaCardapio"></ul>
+        </section>
+        <aside>
+            <h2>Itens Comprados</h2>
+            <ul id="listaComprados"></ul>
+        </aside>
+    </main>
+
+    <script>
+        const produtos = [
+            {
+                nome: "Café Expresso",
+                preco: 8
+            },
+            {
+                nome: "Capuccino",
+                preco: 12
+            },
+            {
+                nome: "Suco de Laranja",
+                preco: 10
+            },
+            {
+                nome: "Água Mineral",
+                preco: 6
+            },
+            {
+                nome: "Fatia de Bolo",
+                preco: 12
+            },
+            {
+                nome: "Sanduíche Natural",
+                preco: 15
+            },
+            {
+                nome: "Croissant",
+                preco: 17
+            }
+        ]
+    </script>
+</body>
+
+</html>
