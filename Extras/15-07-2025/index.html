@@ -12,10 +12,12 @@
     <div>
       <input
         type="text"
-        name="inputPokemon"
         id="inputPokemon"
-        placeholder="Digite o nome ou o número de um Pokémon"
+        placeholder="Digite o nome de um Pokémon"
+        autocomplete="off"
       />
+      <ul id="sugestoes" class="sugestoes"></ul>
+
       <button id="btnSubmit">🔍</button>
     </div>
     <div id="divPokemon"></div>
