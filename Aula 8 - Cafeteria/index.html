@@ -11,6 +11,34 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
         }
+
+        #listaCardapio, #listaComprados {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .item {
+            padding: 20px;
+            margin: 30px 0;
+            width: 170px;
+            height: 170px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 3px #333 solid;
+            border-radius: 20px;
+            transition: .3s ease;
+        }
+
+        .item:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 
@@ -21,11 +49,13 @@
     <main>
         <section>
             <h2>Cardápio</h2>
-            <ul id="listaCardapio"></ul>
+            <div id="listaCardapio"></div>
         </section>
         <aside>
             <h2>Itens Comprados</h2>
-            <ul id="listaComprados"></ul>
+            <div id="listaComprados"></div>
+            <h3>Total</h3>
+            <h2 id="total"></h2>
         </aside>
     </main>
 
@@ -33,43 +63,114 @@
         const produtos = [
             {
                 nome: "Café Expresso",
-                preco: 8
+                preco: 8,
+                imagem: "img/cafe-expresso.png"
             },
             {
                 nome: "Capuccino",
-                preco: 12
+                preco: 12,
+                imagem: "img/cafe-expresso.png"
             },
             {
                 nome: "Suco de Laranja",
-                preco: 10
+                preco: 10,
+                imagem: "img/cafe-expresso.png"
             },
             {
                 nome: "Água Mineral",
-                preco: 6
+                preco: 6,
+                imagem: "img/cafe-expresso.png"
             },
             {
                 nome: "Fatia de Bolo",
-                preco: 12
+                preco: 12,
+                imagem: "img/cafe-expresso.png"
             },
             {
                 nome: "Sanduíche Natural",
-                preco: 15
+                preco: 15,
+                imagem: "img/cafe-expresso.png"
             },
             {
                 nome: "Croissant",
-                preco: 17
+                preco: 17,
+                imagem: "img/cafe-expresso.png"
             }
         ]
 
         const listaProdutos = () => {
             const listaCardapio = document.getElementById("listaCardapio")
             produtos.forEach((produto) => {
+                const div = document.createElement("div")
+                div.classList.add("item")
+
                 let nome = produto.nome
-                const li = document.createElement("li")
-                li.textContent = nome
-                listaCardapio.appendChild(li)
-            }) 
+                const nomeHtml = document.createElement("h4")
+                nomeHtml.textContent = nome
+                nomeHtml.classList.add("nome")
+                div.appendChild(nomeHtml)
+
+                let preco = produto.preco
+                const precoHtml = document.createElement("h3")
+                precoHtml.textContent = preco + " R$"
+                precoHtml.classList.add("preco")
+                div.appendChild(precoHtml)
+
+                let imagem = produto.imagem
+                const imagemHtml = document.createElement("img")
+                imagemHtml.src = imagem
+                imagemHtml.classList.add("img")
+                imagemHtml.style.width = "100px"
+                div.appendChild(imagemHtml)
+
+                listaCardapio.appendChild(div)
+            })
         }
+
+        const compraProduto = () => {
+            const itens = document.querySelectorAll(".item")
+            const itensComprados = document.getElementById("listaComprados")
+
+            itens.forEach((item) => {
+                item.addEventListener("click", () => {
+                    const nome = item.querySelector(".nome").textContent
+                    const jaComprado = Array.from(itensComprados.querySelectorAll(".nome")).some((el) => {
+                        return el.textContent === nome
+                    })
+
+                    if (jaComprado) {
+                        return
+                    }
+                    const novoItem = item.cloneNode(true)
+                    itensComprados.appendChild(novoItem)
+
+                    novoItem.addEventListener("click", () => {
+                        novoItem.remove()
+                        calculaTotal()
+                    })
+                    calculaTotal()
+                })
+            })
+
+        }
+
+        const calculaTotal = () => {
+            const itensComprados = document.getElementById("listaComprados")
+            const itens = itensComprados.querySelectorAll(".item")
+            const totalHtml = document.getElementById("total")
+            let soma = 0
+            
+            itens.forEach(item => {
+                let preco = item.querySelector(".preco").textContent
+                preco = parseInt(preco)
+                soma += preco
+            })
+            totalHtml.textContent = soma + " R$"
+        }
+
+        listaProdutos()
+        compraProduto()
+
     </script>
 </body>
 
