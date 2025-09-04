@@ -1,177 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cefeteria</title>
     <style>
-        main {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
 
-        #listaCardapio, #listaComprados {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
+      main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 20px;
+      }
 
-        .item {
-            padding: 20px;
-            margin: 30px 0;
-            width: 170px;
-            height: 170px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 3px #333 solid;
-            border-radius: 20px;
-            transition: .3s ease;
-        }
+      main section,
+      main aside {
+        margin: 0 15px;
+      }
 
-        .item:hover {
-            cursor: pointer;
-            transform: scale(1.1);
-        }
+      section {
+        width: max-content;
+      }
+
+      header {
+        background-color: rgb(255, 220, 64);
+        color: #fff;
+        padding: 15px 30px;
+        text-align: center;
+        font-weight: bold;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        margin: 10px 0;
+      }
+
+      .item:hover {
+        cursor: pointer;
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      #listaCardapio {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+      }
+
+      #listaCardapio .item {
+        padding: 20px;
+        width: 200px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border: 3px solid #333;
+        border-radius: 15px;
+        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      #listaComprados {
+        width: 300px;
+        height: max-content;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #listaComprados .item {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Cefeteria</h1>
+      <h1>CEFETERIA</h1>
     </header>
     <main>
-        <section>
-            <h2>Cardápio</h2>
-            <div id="listaCardapio"></div>
-        </section>
-        <aside>
-            <h2>Itens Comprados</h2>
-            <div id="listaComprados"></div>
-            <h3>Total</h3>
-            <h2 id="total"></h2>
-        </aside>
+      <section>
+        <h2>Cardápio</h2>
+        <div id="listaCardapio"></div>
+      </section>
+      <aside>
+        <h2>Itens Comprados</h2>
+        <div id="listaComprados"></div>
+        <h3>Total</h3>
+        <h2 id="total"></h2>
+      </aside>
     </main>
 
     <script>
-        const produtos = [
-            {
-                nome: "Café Expresso",
-                preco: 8,
-                imagem: "img/cafe-expresso.png"
-            },
-            {
-                nome: "Capuccino",
-                preco: 12,
-                imagem: "img/cafe-expresso.png"
-            },
-            {
-                nome: "Suco de Laranja",
-                preco: 10,
-                imagem: "img/cafe-expresso.png"
-            },
-            {
-                nome: "Água Mineral",
-                preco: 6,
-                imagem: "img/cafe-expresso.png"
-            },
-            {
-                nome: "Fatia de Bolo",
-                preco: 12,
-                imagem: "img/cafe-expresso.png"
-            },
-            {
-                nome: "Sanduíche Natural",
-                preco: 15,
-                imagem: "img/cafe-expresso.png"
-            },
-            {
-                nome: "Croissant",
-                preco: 17,
-                imagem: "img/cafe-expresso.png"
+      const produtos = [
+        {
+          nome: "Café Expresso",
+          preco: 8,
+          imagem: "img/cafe-expresso.png",
+        },
+        {
+          nome: "Capuccino",
+          preco: 12,
+          imagem: "img/capuccino.png",
+        },
+        {
+          nome: "Suco de Laranja",
+          preco: 10,
+          imagem: "img/suco-de-laranja.png",
+        },
+        {
+          nome: "Água Mineral",
+          preco: 6,
+          imagem: "img/agua-mineral.png",
+        },
+        {
+          nome: "Fatia de Bolo",
+          preco: 12,
+          imagem: "img/fatia-de-bolo.png",
+        },
+        {
+          nome: "Sanduíche Natural",
+          preco: 15,
+          imagem: "img/sanduiche-natural.png",
+        },
+        {
+          nome: "Croissant",
+          preco: 17,
+          imagem: "img/croissant.png",
+        },
+      ]
+
+      const listaProdutos = () => {
+        const listaCardapio = document.getElementById("listaCardapio")
+        produtos.forEach((produto) => {
+          const div = document.createElement("div")
+          div.classList.add("item")
+
+          let imagem = produto.imagem
+          const imagemHtml = document.createElement("img")
+          imagemHtml.src = imagem
+          imagemHtml.classList.add("img")
+          imagemHtml.style.width = "100px"
+          div.appendChild(imagemHtml)
+
+          const divAux = document.createElement("div")
+          div.appendChild(divAux)
+
+          let nome = produto.nome
+          const nomeHtml = document.createElement("h4")
+          nomeHtml.textContent = nome
+          nomeHtml.classList.add("nome")
+          divAux.appendChild(nomeHtml)
+
+          let preco = produto.preco
+          const precoHtml = document.createElement("h3")
+          precoHtml.textContent = preco + " R$"
+          precoHtml.classList.add("preco")
+          divAux.appendChild(precoHtml)
+
+          listaCardapio.appendChild(div)
+
+          div.addEventListener("click", () => {
+            let itensComprados = localStorage.getItem("itensComprados") || ""
+            if (!itensComprados.includes(produto.nome)) {
+              itensComprados += `${produto.nome}|${produto.preco}#`
+              localStorage.setItem("itensComprados", itensComprados)
             }
-        ]
+            carregaComprado()
+          })
+        })
+      }
 
-        const listaProdutos = () => {
-            const listaCardapio = document.getElementById("listaCardapio")
-            produtos.forEach((produto) => {
-                const div = document.createElement("div")
-                div.classList.add("item")
+      const carregaComprado = () => {
+        const listaComprados = document.getElementById("listaComprados")
+        listaComprados.innerHTML = ""
+        let soma = 0
 
-                let nome = produto.nome
-                const nomeHtml = document.createElement("h4")
-                nomeHtml.textContent = nome
-                nomeHtml.classList.add("nome")
-                div.appendChild(nomeHtml)
+        let itensComprados = localStorage.getItem("itensComprados") || ""
+        itens = itensComprados.split("#").filter((texto) => texto != "")
 
-                let preco = produto.preco
-                const precoHtml = document.createElement("h3")
-                precoHtml.textContent = preco + " R$"
-                precoHtml.classList.add("preco")
-                div.appendChild(precoHtml)
+        itens.forEach((item) => {
+          const [nome, preco] = item.split("|")
+          soma += parseInt(preco)
 
-                let imagem = produto.imagem
-                const imagemHtml = document.createElement("img")
-                imagemHtml.src = imagem
-                imagemHtml.classList.add("img")
-                imagemHtml.style.width = "100px"
-                div.appendChild(imagemHtml)
+          const div = document.createElement("div")
+          div.classList.add("item")
 
-                listaCardapio.appendChild(div)
-            })
-        }
+          const p = document.createElement("p")
+          p.textContent = `${nome} - ${preco} R$`
+          div.appendChild(p)
 
-        const compraProduto = () => {
-            const itens = document.querySelectorAll(".item")
-            const itensComprados = document.getElementById("listaComprados")
+          div.addEventListener("click", () => {
+            let novosItens =
+              itens.filter((i) => !i.includes(nome)).join("#") + "#"
+            localStorage.setItem("itensComprados", novosItens)
+            carregaComprado()
+          })
+          listaComprados.appendChild(div)
+        })
+        const totalHtml = document.getElementById("total")
+        totalHtml.textContent = soma + " R$"
+      }
 
-            itens.forEach((item) => {
-                item.addEventListener("click", () => {
-                    const nome = item.querySelector(".nome").textContent
-                    const jaComprado = Array.from(itensComprados.querySelectorAll(".nome")).some((el) => {
-                        return el.textContent === nome
-                    })
-
-                    if (jaComprado) {
-                        return
-                    }
-                    const novoItem = item.cloneNode(true)
-                    itensComprados.appendChild(novoItem)
-
-                    novoItem.addEventListener("click", () => {
-                        novoItem.remove()
-                        calculaTotal()
-                    })
-                    calculaTotal()
-                })
-            })
-
-        }
-
-        const calculaTotal = () => {
-            const itensComprados = document.getElementById("listaComprados")
-            const itens = itensComprados.querySelectorAll(".item")
-            const totalHtml = document.getElementById("total")
-            let soma = 0
-            
-            itens.forEach(item => {
-                let preco = item.querySelector(".preco").textContent
-                preco = parseInt(preco)
-                soma += preco
-            })
-            totalHtml.textContent = soma + " R$"
-        }
-
-        listaProdutos()
-        compraProduto()
-
+      listaProdutos()
+      carregaComprado()
     </script>
-</body>
-
+  </body>
 </html>
