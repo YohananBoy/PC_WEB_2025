@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estudano pa prova</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      header {
+        text-align: center;
+        padding: 20px;
+        background: #4a90e2;
+        color: white;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.2rem;
+      }
+
+      header h2 {
+        margin: 5px 0 15px;
+        font-weight: normal;
+      }
+
+      main {
+        width: 90%;
+        margin: 30px auto;
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      thead {
+        background: #4a90e2;
+        color: white;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: center;
+      }
+
+      tbody tr:nth-child(even) {
+        background: #f2f6fc;
+      }
+
+      tbody tr:hover {
+        background: #dce9f9;
+        cursor: pointer;
+      }
+
+      img {
+        border-radius: 5px;
+        max-height: 80px;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Loja top</h1>
+      <h2>só as coisa mais top</h2>
+      <hr />
+    </header>
+    <main>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Marca</th>
+            <th>Imagem</th>
+            <th>Descricao</th>
+            <th>Preço</th>
+            <th>Em estoque</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaProdutos"></tbody>
+      </table>
+    </main>
+  </body>
+  <script>
+    const url = "https://dummyjson.com/products"
+    const table = document.getElementById("tabelaProdutos")
+
+    async function pegaProdutos() {
+      const resp = await fetch(url)
+      data = await resp.json()
+      console.log(data)
+
+      data.products.forEach((produto) => {
+        let tr = document.createElement("tr")
+        table.appendChild(tr)
+        let nome = document.createElement("td")
+        let categoria = document.createElement("td")
+        let marca = document.createElement("td")
+        let imagem = document.createElement("td")
+        let descricao = document.createElement("td")
+        let preco = document.createElement("td")
+        let emEstoque = document.createElement("td")
+
+        nome.textContent = produto.title
+        tr.appendChild(nome)
+
+        categoria.textContent = produto.category
+        tr.appendChild(categoria)
+
+        marca.textContent = produto.brand
+        tr.appendChild(marca)
+
+        imagemSrc = document.createElement("img")
+        imagemSrc.src = produto.images[0]
+        imagemSrc.style.width = "100px"
+        imagem.appendChild(imagemSrc)
+        tr.appendChild(imagem)
+
+        descricao.textContent = produto.description
+        tr.appendChild(descricao)
+
+        preco.textContent = produto.price + " R$"
+        tr.appendChild(preco)
+
+        emEstoque.textContent =
+          produto.availabilityStatus == "In Stock"
+            ? "Em estoque"
+            : "Sem estoque"
+        tr.appendChild(emEstoque)
+      })
+    }
+
+    pegaProdutos()
+  </script>
+</html>
