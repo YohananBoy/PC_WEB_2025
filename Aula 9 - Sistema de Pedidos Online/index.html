@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sistema de Pedidos Online</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🍔 Lanchonete da Web</h1>
+
+    <form id="formPedido">
+      <input type="text" id="cliente" placeholder="Nome do cliente" required />
+      <input type="text" id="item" placeholder="Item do pedido" required />
+      <input type="number" id="valor" placeholder="Valor (R$)" step="0.01" required />
+      <button type="submit">Adicionar Pedido</button>
+    </form>
+
+    <div class="botoes">
+      <button id="btnListar">Listar Pedidos</button>
+      <button id="btnTotal">Calcular Total</button>
+      <button id="btnBuscar">Buscar Pedido por Cliente</button>
+    </div>
+
+    <div id="saida"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
