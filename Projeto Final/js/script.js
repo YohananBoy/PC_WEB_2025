@@ -1,214 +1,18 @@
-// Lista inicial de 50 livros
-const biblioteca = [
-  {
-    issn: "1001",
-    titulo: "Dom Casmurro",
-    autor: "Machado de Assis",
-    editora: "Nova Fronteira",
-    ano: 1899,
-    genero: "Romance",
-    local: "1-A",
-    disponivel: true,
-  },
-  {
-    issn: "1002",
-    titulo: "O Cortiço",
-    autor: "Aluísio Azevedo",
-    editora: "Saraiva",
-    ano: 1890,
-    genero: "Naturalismo",
-    local: "1-B",
-    disponivel: true,
-  },
-  {
-    issn: "1003",
-    titulo: "Iracema",
-    autor: "José de Alencar",
-    editora: "Ática",
-    ano: 1865,
-    genero: "Romance",
-    local: "1-C",
-    disponivel: true,
-  },
-  {
-    issn: "1004",
-    titulo: "A Moreninha",
-    autor: "Joaquim Manuel de Macedo",
-    editora: "L&PM",
-    ano: 1844,
-    genero: "Romance",
-    local: "1-D",
-    disponivel: true,
-  },
-  {
-    issn: "1005",
-    titulo: "Memórias Póstumas de Brás Cubas",
-    autor: "Machado de Assis",
-    editora: "Companhia das Letras",
-    ano: 1881,
-    genero: "Realismo",
-    local: "1-E",
-    disponivel: true,
-  },
-  {
-    issn: "1006",
-    titulo: "O Alienista",
-    autor: "Machado de Assis",
-    editora: "Martin Claret",
-    ano: 1882,
-    genero: "Sátira",
-    local: "2-A",
-    disponivel: true,
-  },
-  {
-    issn: "1007",
-    titulo: "Capitães da Areia",
-    autor: "Jorge Amado",
-    editora: "Record",
-    ano: 1937,
-    genero: "Romance",
-    local: "2-B",
-    disponivel: true,
-  },
-  {
-    issn: "1008",
-    titulo: "Gabriela, Cravo e Canela",
-    autor: "Jorge Amado",
-    editora: "Record",
-    ano: 1958,
-    genero: "Romance",
-    local: "2-C",
-    disponivel: true,
-  },
-  {
-    issn: "1009",
-    titulo: "Grande Sertão: Veredas",
-    autor: "Guimarães Rosa",
-    editora: "Globo",
-    ano: 1956,
-    genero: "Literatura Brasileira",
-    local: "2-D",
-    disponivel: true,
-  },
-  {
-    issn: "1010",
-    titulo: "Vidas Secas",
-    autor: "Graciliano Ramos",
-    editora: "Record",
-    ano: 1938,
-    genero: "Realismo",
-    local: "2-E",
-    disponivel: true,
-  },
-  {
-    issn: "1011",
-    titulo: "Senhora",
-    autor: "José de Alencar",
-    editora: "Martin Claret",
-    ano: 1875,
-    genero: "Romance",
-    local: "3-A",
-    disponivel: true,
-  },
-  {
-    issn: "1012",
-    titulo: "O Guarani",
-    autor: "José de Alencar",
-    editora: "Ática",
-    ano: 1857,
-    genero: "Romance",
-    local: "3-B",
-    disponivel: true,
-  },
-  {
-    issn: "1013",
-    titulo: "A Escrava Isaura",
-    autor: "Bernardo Guimarães",
-    editora: "Saraiva",
-    ano: 1875,
-    genero: "Romance",
-    local: "3-C",
-    disponivel: true,
-  },
-  {
-    issn: "1014",
-    titulo: "Triste Fim de Policarpo Quaresma",
-    autor: "Lima Barreto",
-    editora: "Penguin",
-    ano: 1915,
-    genero: "Sátira",
-    local: "3-D",
-    disponivel: true,
-  },
-  {
-    issn: "1015",
-    titulo: "Mar Morto",
-    autor: "Jorge Amado",
-    editora: "Record",
-    ano: 1936,
-    genero: "Romance",
-    local: "3-E",
-    disponivel: true,
-  },
-  {
-    issn: "1016",
-    titulo: "Sagarana",
-    autor: "Guimarães Rosa",
-    editora: "Nova Fronteira",
-    ano: 1946,
-    genero: "Contos",
-    local: "4-A",
-    disponivel: true,
-  },
-  {
-    issn: "1017",
-    titulo: "Fogo Morto",
-    autor: "José Lins do Rego",
-    editora: "José Olympio",
-    ano: 1943,
-    genero: "Regionalismo",
-    local: "4-B",
-    disponivel: true,
-  },
-  {
-    issn: "1018",
-    titulo: "A Hora da Estrela",
-    autor: "Clarice Lispector",
-    editora: "Rocco",
-    ano: 1977,
-    genero: "Ficção",
-    local: "4-C",
-    disponivel: true,
-  },
-  {
-    issn: "1019",
-    titulo: "O Primo Basílio",
-    autor: "Eça de Queirós",
-    editora: "Martin Claret",
-    ano: 1878,
-    genero: "Realismo",
-    local: "4-D",
-    disponivel: true,
-  },
-  {
-    issn: "1020",
-    titulo: "Os Maias",
-    autor: "Eça de Queirós",
-    editora: "Globo",
-    ano: 1888,
-    genero: "Realismo",
-    local: "4-E",
-    disponivel: true,
-  },
-]
-
 const btnConsultarLivros = document.querySelector("#consultarLivros")
 const btnListarTodosLivros = document.querySelector("#listarLivros")
 const btnCadastrarLivro = document.querySelector("#cadastrarLivro")
 const btnRegistrarRetirada = document.querySelector("#registrarRetirada")
 const divSaida = document.querySelector("#saidaBusca")
+const divCadastro = document.querySelector("#saida")
 const inputBusca = document.querySelector("#busca")
 const inputRetirada = document.querySelector("#issnRetirada")
+const inputIssn = document.querySelector("#novoIssn")
+const inputTitulo = document.querySelector("#novoTitulo")
+const inputAutor = document.querySelector("#novoAutor")
+const inputEditora = document.querySelector("#novoEditora")
+const inputAno = document.querySelector("#novoAno")
+const inputGenero = document.querySelector("#novoGenero")
+const inputLocal = document.querySelector("#novoLocal")
 
 /**
  * Função construtora de Exemplares da Biblioteca
@@ -241,14 +45,43 @@ function Livro(
   this.disponivel = disponibilidade
 }
 
+function pegaDadosFormulario() {
+  return {
+    id: null,
+    titulo: inputTitulo.value,
+    autor: inputAutor.value,
+    editora: inputEditora.value,
+    anoPublicacao: inputAno.value,
+    genero: inputGenero.value,
+    localizacao: inputLocal.value,
+    ISSN: inputIssn.value,
+  }
+}
+
+async function enviaLivroServidor(livro) {
+  const resposta = await fetch(
+    "http://localhost/Projeto_Final/index.php?modulo=livro",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(livro),
+    }
+  )
+
+  const dados = await resposta.json()
+  return dados
+}
+
 /**
  * Função que deverá pegar os dados do formulário e gerar um novo
  * exemplar na lista de livros da biblioteca
  *
  */
-function cadastrarExemplar() {
-  //implemente seu código aqui
-  console.log("chamando cadastrarExemplar")
+async function cadastrarExemplar() {
+  divCadastro.textContent = ""
+  let novoLivro = pegaDadosFormulario()
+  let resposta = await enviaLivroServidor(novoLivro)
+  divCadastro.textContent = resposta.mensagem
 }
 
 async function pegaLivros() {
