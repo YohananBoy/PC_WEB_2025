@@ -60,7 +60,7 @@ function pegaDadosFormulario() {
 
 async function enviaLivroServidor(livro) {
   const resposta = await fetch(
-    "http://localhost/Projeto_Final/index.php?modulo=livro",
+    "http://localhost/Projeto_Final_Back/index.php?modulo=livro",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -85,7 +85,7 @@ async function cadastrarExemplar() {
 }
 
 async function pegaLivros() {
-  const url = "http://localhost/Projeto_Final/index.php?modulo=livro"
+  const url = "http://localhost/Projeto_Final_Back/index.php?modulo=livro"
 
   let resposta = await fetch(url)
   let dados = await resposta.json()
