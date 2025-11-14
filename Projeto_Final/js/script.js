@@ -86,14 +86,16 @@ async function pegaLivros() {
 }
 
 function filtraLivros(livros, filtro) {
-  let saida = livros.filter(
+  if (!filtro || filtro.trim() === "") {
+    return
+  }
+
+  return livros.filter(
     (livro) =>
       livro.titulo.toLowerCase().startsWith(filtro.toLowerCase()) ||
       livro.genero.toLowerCase().startsWith(filtro.toLowerCase()) ||
       livro.autor.toLowerCase().startsWith(filtro.toLowerCase())
   )
-
-  return saida
 }
 
 function exibeLivros(livros) {
