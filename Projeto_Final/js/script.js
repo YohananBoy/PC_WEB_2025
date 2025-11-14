@@ -23,18 +23,9 @@ const inputLocal = document.querySelector("#novoLocal")
  * @param {*} ano
  * @param {*} genero
  * @param {*} local
- * @param {*} disponibilidade
+ * @param {*} disponivel
  */
-function Livro(
-  issn,
-  titulo,
-  autor,
-  editora,
-  ano,
-  genero,
-  local,
-  disponibilidade
-) {
+function Livro(issn, titulo, autor, editora, ano, genero, local, disponivel) {
   this.issn = issn
   this.titulo = titulo
   this.autor = autor
@@ -42,7 +33,7 @@ function Livro(
   this.ano = ano
   this.genero = genero
   this.local = local
-  this.disponivel = disponibilidade
+  this.disponivel = disponivel
 }
 
 function pegaDadosFormulario() {
@@ -55,14 +46,15 @@ function pegaDadosFormulario() {
     genero: inputGenero.value,
     localizacao: inputLocal.value,
     ISSN: inputIssn.value,
+    disponivel: true,
   }
 }
 
-async function enviaLivroServidor(livro) {
+async function enviaLivroServidor(livro, metodo) {
   const resposta = await fetch(
     "http://localhost/Projeto_Final_Back/index.php?modulo=livro",
     {
-      method: "POST",
+      method: metodo,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(livro),
     }
@@ -80,7 +72,7 @@ async function enviaLivroServidor(livro) {
 async function cadastrarExemplar() {
   divCadastro.textContent = ""
   let novoLivro = pegaDadosFormulario()
-  let resposta = await enviaLivroServidor(novoLivro)
+  let resposta = await enviaLivroServidor(novoLivro, "POST")
   divCadastro.textContent = resposta.mensagem
 }
 
@@ -108,8 +100,9 @@ function exibeLivros(livros) {
   divSaida.innerHTML = ""
   let ul = document.createElement("ul")
   livros.forEach((livro) => {
+    let disponivel = Number(livro.disponivel) ? "Disponível" : "Não Disponível"
     let li = document.createElement("li")
-    li.textContent = `${livro.ISSN} - ${livro.titulo} - ${livro.autor} - ${livro.anoPublicacao} - ${livro.genero} - ${livro.localizacao}`
+    li.textContent = `${livro.ISSN} - ${livro.titulo} - ${livro.autor} - ${livro.anoPublicacao} - ${livro.genero} - ${livro.localizacao} - ${disponivel}`
     ul.appendChild(li)
   })
   divSaida.appendChild(ul)
@@ -137,9 +130,11 @@ async function listarTodos() {
  * Função que deverá marcar o exemplar como indisponível no acervo
  */
 async function registrarRetirada() {
+  let dados = await pegaLivros()
   dados.forEach((livro) => {
     if (livro.ISSN === inputRetirada.value) {
-      livro.disponivel = false
+      livro.disponivel = 0
+      enviaLivroServidor(livro, "PUT")
     }
   })
 }
