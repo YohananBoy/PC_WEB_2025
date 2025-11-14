@@ -13,17 +13,18 @@ const inputEditora = document.querySelector("#novoEditora")
 const inputAno = document.querySelector("#novoAno")
 const inputGenero = document.querySelector("#novoGenero")
 const inputLocal = document.querySelector("#novoLocal")
+//codigo escrito por Yohanan, se você ta lendo isso no código de outra pessoa o safado me copiou
 
 /**
  * Função construtora de Exemplares da Biblioteca
- * @param {*} issn
- * @param {*} titulo
- * @param {*} autor
- * @param {*} editora
- * @param {*} ano
- * @param {*} genero
- * @param {*} local
- * @param {*} disponivel
+ * @param {string} issn
+ * @param {string} titulo
+ * @param {string} autor
+ * @param {string} editora
+ * @param {int} ano
+ * @param {string} genero
+ * @param {string} local
+ * @param {boolean} disponivel
  */
 function Livro(issn, titulo, autor, editora, ano, genero, local, disponivel) {
   this.issn = issn
@@ -36,6 +37,9 @@ function Livro(issn, titulo, autor, editora, ano, genero, local, disponivel) {
   this.disponivel = disponivel
 }
 
+/**
+ * Função que pega os dados do formulário
+ */
 function pegaDadosFormulario() {
   return {
     id: null,
@@ -50,6 +54,10 @@ function pegaDadosFormulario() {
   }
 }
 
+/**
+ * Função que envia o objeto livro para o servidor
+ * de acordo com o método desejado
+ */
 async function enviaLivroServidor(livro, metodo) {
   const resposta = await fetch(
     "http://localhost/Projeto_Final_Back/index.php?modulo=livro",
@@ -76,6 +84,9 @@ async function cadastrarExemplar() {
   divCadastro.textContent = resposta.mensagem
 }
 
+/**
+ * Função que pega os livros do bando de dados
+ */
 async function pegaLivros() {
   const url = "http://localhost/Projeto_Final_Back/index.php?modulo=livro"
 
@@ -85,6 +96,10 @@ async function pegaLivros() {
   return dados
 }
 
+/**
+ * Função que filtra todos os itens de uma array
+ * e compara o filtro com titulo, genero e autor
+ */
 function filtraLivros(livros, filtro) {
   if (!filtro || filtro.trim() === "") {
     return
@@ -97,7 +112,10 @@ function filtraLivros(livros, filtro) {
       livro.autor.toLowerCase().startsWith(filtro.toLowerCase())
   )
 }
-
+/**
+ * Função que exibe todos os itens de uma array
+ * em uma lista
+ */
 function exibeLivros(livros) {
   divSaida.innerHTML = ""
   let ul = document.createElement("ul")
