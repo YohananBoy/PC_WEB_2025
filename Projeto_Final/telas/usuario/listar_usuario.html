@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca CEFET-RJ</title>
+    <link rel="stylesheet" href="../../css/estilo.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Biblioteca do CEFET-RJ Nova Friburgo</h1>
+
+      <section class="acoes">
+        <h2>Gerenciamento</h2>
+        <input type="text" id="busca" placeholder="Buscar por nome" />
+        <button id="consultarUsuarios">Consultar</button>
+        <button id="listarUsuarios">Listar Todos</button>
+      </section>
+
+      <section id="areaBusca">
+        <h3>Resultado da Busca</h3>
+        <div id="saidaBusca" class="resultado"></div>
+      </section>
+    </div>
+    <script>
+      const btnConsultarUsuarios = document.querySelector("#consultarUsuarios")
+      const btnListarTodosUsuarios = document.querySelector("#listarUsuarios")
+      const divSaida = document.querySelector("#saidaBusca")
+      const inputBusca = document.querySelector("#busca")
+
+      /**
+       * Função que pega os usuarios do bando de dados
+       */
+      async function pegaUsuarios() {
+        const url =
+          "http://localhost/Projeto_Final_Back/index.php?modulo=usuario"
+
+        let resposta = await fetch(url)
+        let dados = await resposta.json()
+
+        return dados
+      }
+
+      /**
+       * Função que filtra todos os itens de uma array
+       * e compara o filtro com email, genero e senha
+       */
+      function filtraUsuarios(usuarios, filtro) {
+        if (!filtro || filtro.trim() === "") {
+          return
+        }
+
+        return usuarios.filter((usuario) =>
+          usuario.nome.toLowerCase().startsWith(filtro.toLowerCase())
+        )
+      }
+      /**
+       * Função que exibe todos os itens de uma array
+       * em uma lista
+       */
+      function exibeUsuarios(usuarios) {
+        divSaida.innerHTML = ""
+        let table = document.createElement("table")
+        table.innerHTML =
+          "<tr><th>Nome</th> <th>Email</th> <th>Senha</th> <th colspan='2'>Ações</th></tr>"
+        table.border = 1
+        usuarios.forEach((usuario) => {
+          let tr = document.createElement("tr")
+          let nome = document.createElement("td")
+          nome.textContent = usuario.nome
+          tr.appendChild(nome)
+          let email = document.createElement("td")
+          email.textContent = usuario.email
+          tr.appendChild(email)
+          let senha = document.createElement("td")
+          senha.textContent = usuario.senha
+          tr.appendChild(senha)
+          let atualizar = document.createElement("td")
+          atualizar.innerHTML = `<a href='cadastrar_usuario.html?id=${usuario.id}'>Atualizar<a>`
+          tr.appendChild(atualizar)
+          let remover = document.createElement("td")
+          remover.innerHTML = `<a href='remover_usuario.html?id=${usuario.id}'>Remover<a>`
+          tr.appendChild(remover)
+          table.appendChild(tr)
+        })
+        divSaida.appendChild(table)
+      }
+
+      /**
+       * Função que deverá pegar o parâmetro de filtro e listar todos os
+       * exemplares que satisfizerem a condição
+       */
+      async function consultarUsuarios() {
+        let dados = await pegaUsuarios()
+        let usuarios = filtraUsuarios(dados, inputBusca.value)
+        exibeUsuarios(usuarios)
+      }
+
+      /**
+       * Função que deverá listar na tela todos os usuarios do acervo
+       */
+      async function listarTodos() {
+        let usuarios = await pegaUsuarios()
+        exibeUsuarios(usuarios)
+      }
+
+      /*
+       * Bloco de chamada de eventos
+       */
+      btnConsultarUsuarios.addEventListener("click", consultarUsuarios)
+      btnListarTodosUsuarios.addEventListener("click", listarTodos)
+    </script>
+  </body>
+</html>

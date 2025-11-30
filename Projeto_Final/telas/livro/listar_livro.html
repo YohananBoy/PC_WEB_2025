@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca CEFET-RJ</title>
+    <link rel="stylesheet" href="../../css/estilo.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Biblioteca do CEFET-RJ Nova Friburgo</h1>
+
+      <section class="acoes">
+        <h2>Gerenciamento</h2>
+        <input
+          type="text"
+          id="busca"
+          placeholder="Buscar por título, autor ou gênero"
+        />
+        <button id="consultarLivros">Consultar</button>
+        <button id="listarLivros">Listar Todos</button>
+      </section>
+
+      <section id="areaBusca">
+        <h3>Resultado da Busca</h3>
+        <div id="saidaBusca" class="resultado"></div>
+      </section>
+    </div>
+    <script>
+      const btnConsultarLivros = document.querySelector("#consultarLivros")
+      const btnListarTodosLivros = document.querySelector("#listarLivros")
+      const btnCadastrarLivro = document.querySelector("#cadastrarLivro")
+      const btnRegistrarRetirada = document.querySelector("#registrarRetirada")
+      const divSaida = document.querySelector("#saidaBusca")
+      const divCadastro = document.querySelector("#saida")
+      const inputBusca = document.querySelector("#busca")
+      const inputRetirada = document.querySelector("#issnRetirada")
+      const inputIssn = document.querySelector("#novoIssn")
+      const inputTitulo = document.querySelector("#novoTitulo")
+      const inputAutor = document.querySelector("#novoAutor")
+      const inputEditora = document.querySelector("#novoEditora")
+      const inputAno = document.querySelector("#novoAno")
+      const inputGenero = document.querySelector("#novoGenero")
+      const inputLocal = document.querySelector("#novoLocal")
+
+      /**
+       * Função que pega os livros do bando de dados
+       */
+      async function pegaLivros() {
+        const url = "http://localhost/Projeto_Final_Back/index.php?modulo=livro"
+
+        let resposta = await fetch(url)
+        let dados = await resposta.json()
+
+        return dados
+      }
+
+      /**
+       * Função que filtra todos os itens de uma array
+       * e compara o filtro com titulo, genero e autor
+       */
+      function filtraLivros(livros, filtro) {
+        if (!filtro || filtro.trim() === "") {
+          return
+        }
+
+        return livros.filter(
+          (livro) =>
+            livro.titulo.toLowerCase().startsWith(filtro.toLowerCase()) ||
+            livro.genero.toLowerCase().startsWith(filtro.toLowerCase()) ||
+            livro.autor.toLowerCase().startsWith(filtro.toLowerCase())
+        )
+      }
+      /**
+       * Função que exibe todos os itens de uma array
+       * em uma lista
+       */
+      function exibeLivros(livros) {
+        divSaida.innerHTML = ""
+        let table = document.createElement("table")
+        table.innerHTML =
+          "<tr><th>ISSN</th> <th>Título</th> <th>Autor</th> <th>Ano de Publicação</th> <th>Genero</th> <th>Localização</th> <th>Disponibilidade</th> <th colspan='2'>Ações</th></tr>"
+        table.border = 1
+        livros.forEach((livro) => {
+          let disponivel = Number(livro.disponivel)
+            ? "Disponível"
+            : "Não Disponível"
+          let tr = document.createElement("tr")
+          let issn = document.createElement("td")
+          issn.textContent = livro.ISSN
+          tr.appendChild(issn)
+          let titulo = document.createElement("td")
+          titulo.textContent = livro.titulo
+          tr.appendChild(titulo)
+          let autor = document.createElement("td")
+          autor.textContent = livro.autor
+          tr.appendChild(autor)
+          let anoPublicacao = document.createElement("td")
+          anoPublicacao.textContent = livro.anoPublicacao
+          tr.appendChild(anoPublicacao)
+          let genero = document.createElement("td")
+          genero.textContent = livro.genero
+          tr.appendChild(genero)
+          let localizacao = document.createElement("td")
+          localizacao.textContent = livro.localizacao
+          tr.appendChild(localizacao)
+          let disponibilidade = document.createElement("td")
+          disponibilidade.textContent = disponivel
+          tr.appendChild(disponibilidade)
+          let atualizar = document.createElement("td")
+          atualizar.innerHTML = `<a href='cadastrar_livro.html?id=${livro.id}'>Atualizar<a>`
+          tr.appendChild(atualizar)
+          let remover = document.createElement("td")
+          remover.innerHTML = `<a href='remover_livro.html?id=${livro.id}'>Remover<a>`
+          tr.appendChild(remover)
+          table.appendChild(tr)
+        })
+        divSaida.appendChild(table)
+      }
+
+      /**
+       * Função que deverá pegar o parâmetro de filtro e listar todos os
+       * exemplares que satisfizerem a condição
+       */
+      async function consultarLivros() {
+        let dados = await pegaLivros()
+        let livros = filtraLivros(dados, inputBusca.value)
+        exibeLivros(livros)
+      }
+
+      /**
+       * Função que deverá listar na tela todos os livros do acervo
+       */
+      async function listarTodos() {
+        let livros = await pegaLivros()
+        exibeLivros(livros)
+      }
+
+      /*
+       * Bloco de chamada de eventos
+       */
+      btnConsultarLivros.addEventListener("click", consultarLivros)
+      btnListarTodosLivros.addEventListener("click", listarTodos)
+    </script>
+  </body>
+</html>

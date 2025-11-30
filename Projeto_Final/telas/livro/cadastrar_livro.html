@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca CEFET-RJ</title>
+    <link rel="stylesheet" href="../../css/estilo.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Biblioteca do CEFET-RJ Nova Friburgo</h1>
+
+      <section class="acoes">
+        <h2>Cadastrar Novo Livro</h2>
+        <input id="novoIssn" type="text" placeholder="ISSN" />
+        <input id="novoTitulo" type="text" placeholder="Título" />
+        <input id="novoAutor" type="text" placeholder="Autor" />
+        <input id="novoEditora" type="text" placeholder="Editora" />
+        <input id="novoAno" type="number" placeholder="Ano" />
+        <input id="novoGenero" type="text" placeholder="Gênero" />
+        <input id="novoLocal" type="text" placeholder="Localização (ex: 3-A)" />
+        <button id="cadastrarLivro">Cadastrar</button>
+      </section>
+
+      <div id="saida"></div>
+    </div>
+    <script>
+      const btnCadastrarLivro = document.querySelector("#cadastrarLivro")
+      const divCadastro = document.querySelector("#saida")
+      const inputIssn = document.querySelector("#novoIssn")
+      const inputTitulo = document.querySelector("#novoTitulo")
+      const inputAutor = document.querySelector("#novoAutor")
+      const inputEditora = document.querySelector("#novoEditora")
+      const inputAno = document.querySelector("#novoAno")
+      const inputGenero = document.querySelector("#novoGenero")
+      const inputLocal = document.querySelector("#novoLocal")
+
+      /**
+       * Função que pega os dados do formulário
+       */
+      let livroCarregado = null //caso esteja atualizando o livro fica carregado nessa variavel
+
+      function pegaDadosFormulario() {
+        return {
+          id: id ?? null,
+          titulo: inputTitulo.value,
+          autor: inputAutor.value,
+          editora: inputEditora.value,
+          anoPublicacao: inputAno.value,
+          genero: inputGenero.value,
+          localizacao: inputLocal.value,
+          ISSN: inputIssn.value,
+          disponivel: livroCarregado.disponivel ?? true,
+        }
+      }
+
+      /**
+       * Função que envia o objeto livro para o servidor
+       * de acordo com o método desejado
+       */
+      async function enviaLivroServidor(livro, metodo) {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=livro",
+          {
+            method: metodo,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(livro),
+          }
+        )
+
+        const dados = await resposta.json()
+        return dados
+      }
+
+      /**
+       * Função que deverá pegar os dados do formulário e gerar um novo
+       * exemplar na lista de livros da biblioteca
+       *
+       */
+      async function cadastrarExemplar() {
+        divCadastro.textContent = ""
+        let novoLivro = pegaDadosFormulario()
+        let resposta = await enviaLivroServidor(novoLivro, "POST")
+        divCadastro.textContent = resposta.mensagem
+      }
+
+      /**
+       * Função que busca na API o livro com o mesmo ID que o parâmetro
+       */
+      async function pegaLivroPorId(id) {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=livro"
+        )
+        const livros = await resposta.json()
+        const livro = livros.find((l) => l.id == id)
+
+        if (!livro) {
+          alert("Livro não encontrado!")
+          return
+        }
+
+        return livro
+      }
+
+      /*
+       * Função que preenche o formulário com os dados do livro que será atualizado
+       */
+      function preencherFormulario(livro) {
+        inputIssn.value = livro.ISSN
+        inputTitulo.value = livro.titulo
+        inputAutor.value = livro.autor
+        inputEditora.value = livro.editora
+        inputAno.value = livro.anoPublicacao
+        inputGenero.value = livro.genero
+        inputLocal.value = livro.localizacao
+      }
+
+      async function atualizarExemplar() {
+        divCadastro.textContent = ""
+        let novoLivro = pegaDadosFormulario()
+        let resposta = await enviaLivroServidor(novoLivro, "PUT")
+        divCadastro.textContent = resposta.mensagem
+      }
+
+      /**
+       * Objeto que o chat gpt me ensinou a usar pra pegar os parametros
+       * passados pela URL
+       */
+      const urlParams = new URLSearchParams(window.location.search)
+      const id = urlParams.get("id")
+
+      async function carregarDados() {
+        if (id) {
+          livroCarregado = await pegaLivroPorId(id)
+          preencherFormulario(livroCarregado)
+
+          btnCadastrarLivro.textContent = "Atualizar"
+          btnCadastrarLivro.removeEventListener("click", cadastrarExemplar)
+          btnCadastrarLivro.addEventListener("click", atualizarExemplar)
+        }
+      }
+      carregarDados()
+
+      /*
+       * Bloco de chamada de eventos
+       */
+      btnCadastrarLivro.addEventListener("click", cadastrarExemplar)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca CEFET-RJ</title>
+    <link rel="stylesheet" href="../../css/estilo.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Biblioteca do CEFET-RJ Nova Friburgo</h1>
+
+      <section class="acoes">
+        <h2>Cadastrar Novo Usuario</h2>
+        <input id="novoNome" type="text" placeholder="Nome" />
+        <input id="novoEmail" type="email" placeholder="Email" />
+        <input id="novoSenha" type="password" placeholder="Senha" />
+        <button id="cadastrarUsuario">Cadastrar</button>
+      </section>
+
+      <div id="saida"></div>
+    </div>
+    <script>
+      const btnCadastrarUsuario = document.querySelector("#cadastrarUsuario")
+      const divCadastro = document.querySelector("#saida")
+      const inputNome = document.querySelector("#novoNome")
+      const inputEmail = document.querySelector("#novoEmail")
+      const inputSenha = document.querySelector("#novoSenha")
+
+      /**
+       * Função que pega os dados do formulário
+       */
+      let usuarioCarregado = null //caso esteja atualizando o usuario fica carregado nessa variavel
+
+      function pegaDadosFormulario() {
+        return {
+          id: id ?? null,
+          nome: inputNome.value,
+          email: inputEmail.value,
+          senha: inputSenha.value,
+        }
+      }
+
+      /**
+       * Função que envia o objeto usuario para o servidor
+       * de acordo com o método desejado
+       */
+      async function enviaUsuarioServidor(usuario, metodo) {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=usuario",
+          {
+            method: metodo,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(usuario),
+          }
+        )
+
+        const dados = await resposta.json()
+        return dados
+      }
+
+      /**
+       * Função que deverá pegar os dados do formulário e gerar um novo
+       * exemplar na lista de usuarios da biblioteca
+       *
+       */
+      async function cadastrarExemplar() {
+        divCadastro.textContent = ""
+        let novoUsuario = pegaDadosFormulario()
+        let resposta = await enviaUsuarioServidor(novoUsuario, "POST")
+        divCadastro.textContent = resposta.mensagem
+      }
+
+      /**
+       * Função que busca na API o usuario com o mesmo ID que o parâmetro
+       */
+      async function pegaUsuarioPorId(id) {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=usuario"
+        )
+        const usuarios = await resposta.json()
+        const usuario = usuarios.find((u) => u.id == id)
+
+        return usuario
+      }
+
+      /*
+       * Função que preenche o formulário com os dados do usuario que será atualizado
+       */
+      function preencherFormulario(usuario) {
+        inputNome.value = usuario.nome
+        inputEmail.value = usuario.email
+        inputSenha.value = usuario.senha
+      }
+
+      async function atualizarExemplar() {
+        divCadastro.textContent = ""
+        let novoUsuario = pegaDadosFormulario()
+        let resposta = await enviaUsuarioServidor(novoUsuario, "PUT")
+        divCadastro.textContent = resposta.mensagem
+      }
+
+      /**
+       * Objeto que o chat gpt me ensinou a usar pra pegar os parametros
+       * passados pela URL
+       */
+      const urlParams = new URLSearchParams(window.location.search)
+      const id = urlParams.get("id")
+
+      async function carregarDados() {
+        if (id) {
+          usuarioCarregado = await pegaUsuarioPorId(id)
+          preencherFormulario(usuarioCarregado)
+
+          btnCadastrarUsuario.textContent = "Atualizar"
+          btnCadastrarUsuario.removeEventListener("click", cadastrarExemplar)
+          btnCadastrarUsuario.addEventListener("click", atualizarExemplar)
+        }
+      }
+      carregarDados()
+
+      /*
+       * Bloco de chamada de eventos
+       */
+      btnCadastrarUsuario.addEventListener("click", cadastrarExemplar)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca CEFET-RJ</title>
+    <link rel="stylesheet" href="../../css/estilo.css" />
+  </head>
+  <body>
+    <div class="container">
+      <section class="acoes">
+        <h2>Registrar Retirada</h2>
+        <input
+          type="text"
+          id="issnRetirada"
+          placeholder="Informe o ISSN do livro"
+        />
+        <button id="registrarRetirada">Registrar</button>
+      </section>
+    </div>
+    <script>
+      /**
+       * Função que pega os livros do bando de dados
+       */
+      async function pegaLivros() {
+        const url = "http://localhost/Projeto_Final_Back/index.php?modulo=livro"
+
+        let resposta = await fetch(url)
+        let dados = await resposta.json()
+
+        return dados
+      }
+
+      /**
+       * Função que envia o objeto livro para o servidor
+       * de acordo com o método desejado
+       */
+      async function enviaLivroServidor(livro, metodo) {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=livro",
+          {
+            method: metodo,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(livro),
+          }
+        )
+
+        const dados = await resposta.json()
+        return dados
+      }
+
+      /**
+       * Função que deverá marcar o exemplar como indisponível no acervo
+       */
+      async function registrarRetirada() {
+        let dados = await pegaLivros()
+        dados.forEach((livro) => {
+          if (livro.ISSN === inputRetirada.value) {
+            livro.disponivel = 0
+            enviaLivroServidor(livro, "PUT")
+          }
+        })
+      }
+
+      const inputRetirada = document.querySelector("#issnRetirada")
+      const btnRegistrarRetirada = document.querySelector("#registrarRetirada")
+      btnRegistrarRetirada.addEventListener("click", registrarRetirada)
+    </script>
+  </body>
+</html>
