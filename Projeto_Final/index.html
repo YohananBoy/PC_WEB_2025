@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <title>Biblioteca CEFET-RJ</title>
     <link rel="stylesheet" href="./css/estilo.css" />
-    <script src="./js/script.js" defer></script>
   </head>
   <body>
     <div class="container">
       <h1>Biblioteca do CEFET-RJ Nova Friburgo</h1>
+      <p id="pInfo"></p>
+      <button id="btnLogout">Sair</button>
 
       <section class="acoes">
         <div>
@@ -32,5 +33,35 @@
         </div>
       </section>
     </div>
+    <script>
+      let btnLogout = document.getElementById("btnLogout")
+      let pInfo = document.getElementById("pInfo")
+      async function verificarLogin() {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=usuario&acao=verificar",
+          { credentials: "include" }
+        )
+        return await resposta.json()
+      }
+
+      async function pegaCredenciais() {
+        let dados = await verificarLogin()
+        pInfo.textContent = `Bem vindo(a) ${dados.nome} (${dados.email})`
+        if (dados.logado !== true) {
+          window.location.href = "./telas/login.html"
+        }
+      }
+
+      async function logout() {
+        await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=usuario&acao=logout"
+        )
+        window.location.href = "telas/login.html"
+      }
+
+      pegaCredenciais()
+
+      btnLogout.addEventListener("click", logout)
+    </script>
   </body>
 </html>

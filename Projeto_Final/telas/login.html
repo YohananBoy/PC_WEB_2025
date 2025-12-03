@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca CEFET-RJ</title>
+    <link rel="stylesheet" href="../css/estilo.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Biblioteca do CEFET-RJ Nova Friburgo</h1>
+
+      <h2>Login</h2>
+      <input type="email" name="email" id="email" />
+      <input type="password" name="senha" id="senha" />
+      <button id="btnLogin">Entrar</button>
+    </div>
+    <script>
+      const inputEmail = document.getElementById("email")
+      const inputSenha = document.getElementById("senha")
+      const btnLogin = document.getElementById("btnLogin")
+
+      /**
+       * Função que pega os dados do formulário
+       */
+      function pegaDadosFormulario() {
+        return {
+          email: inputEmail.value,
+          senha: inputSenha.value,
+        }
+      }
+
+      /**
+       * Função que envia o objeto usuario para o servidor
+       * de acordo com o método desejado
+       */
+      async function enviaUsuarioServidor(usuario, metodo) {
+        const resposta = await fetch(
+          "http://localhost/Projeto_Final_Back/index.php?modulo=usuario&acao=login",
+          {
+            method: metodo,
+            headers: { "Content-Type": "application/json" },
+            credentials: "include", //chat gpt falou q isso aqui faz o session funcionar no js
+            body: JSON.stringify(usuario),
+          }
+        )
+
+        const dados = await resposta.json()
+        return dados
+      }
+
+      async function efetuarLogin() {
+        usuario = pegaDadosFormulario()
+        let resposta = await enviaUsuarioServidor(usuario, "POST")
+        if (!resposta.erro) {
+          window.location.href = "../index.html" //novamente chat gpt me ensinando, serve pra redirecionar pra outra pagina
+        } else {
+          alert(resposta.mensagem)
+        }
+      }
+
+      btnLogin.addEventListener("click", efetuarLogin)
+    </script>
+  </body>
+</html>
