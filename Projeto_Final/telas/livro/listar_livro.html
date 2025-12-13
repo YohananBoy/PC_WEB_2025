@@ -26,6 +26,7 @@
       </section>
     </div>
     <script>
+      //Código escrito por Yohanan
       const btnConsultarLivros = document.querySelector("#consultarLivros")
       const btnListarTodosLivros = document.querySelector("#listarLivros")
       const btnCadastrarLivro = document.querySelector("#cadastrarLivro")
@@ -81,40 +82,50 @@
           "<tr><th>ISSN</th> <th>Título</th> <th>Autor</th> <th>Ano de Publicação</th> <th>Genero</th> <th>Localização</th> <th>Disponibilidade</th> <th colspan='2'>Ações</th></tr>"
         table.border = 1
         livros.forEach((livro) => {
-          let disponivel = Number(livro.disponivel)
-            ? "Disponível"
-            : "Não Disponível"
-          let tr = document.createElement("tr")
-          let issn = document.createElement("td")
-          issn.textContent = livro.ISSN
-          tr.appendChild(issn)
-          let titulo = document.createElement("td")
+          let divLivro = document.createElement("div")
+          divLivro.classList.add("livro")
+          let titulo = document.createElement("h3")
           titulo.textContent = livro.titulo
-          tr.appendChild(titulo)
-          let autor = document.createElement("td")
-          autor.textContent = livro.autor
-          tr.appendChild(autor)
-          let anoPublicacao = document.createElement("td")
-          anoPublicacao.textContent = livro.anoPublicacao
-          tr.appendChild(anoPublicacao)
-          let genero = document.createElement("td")
-          genero.textContent = livro.genero
-          tr.appendChild(genero)
-          let localizacao = document.createElement("td")
-          localizacao.textContent = livro.localizacao
-          tr.appendChild(localizacao)
-          let disponibilidade = document.createElement("td")
-          disponibilidade.textContent = disponivel
-          tr.appendChild(disponibilidade)
-          let atualizar = document.createElement("td")
-          atualizar.innerHTML = `<a href='cadastrar_livro.html?id=${livro.id}'>Atualizar<a>`
-          tr.appendChild(atualizar)
-          let remover = document.createElement("td")
-          remover.innerHTML = `<a href='remover_livro.html?id=${livro.id}'>Remover<a>`
-          tr.appendChild(remover)
-          table.appendChild(tr)
+          divLivro.appendChild(titulo)
+          let btnDetalhes = document.createElement("button")
+          btnDetalhes.textContent = "Mostrar Detalhes"
+          btnDetalhes.addEventListener("click", () => {
+            mostrarDetalhes(livro, divLivro)
+          })
+          titulo.classList.add("livro-titulo")
+          btnDetalhes.classList.add("livro-botao")
+          divLivro.appendChild(btnDetalhes)
+          divSaida.appendChild(divLivro)
         })
-        divSaida.appendChild(table)
+      }
+
+      /**
+       * Função que exibe todos os atributos de um livro
+       * caso o usuário clique no botão "Mostar Detalhes"
+       */
+      function mostrarDetalhes(livro, divLivro) {
+        let detalhesExistem = divLivro.querySelector(".detalhes")
+        if (detalhesExistem) {
+          detalhesExistem.remove()
+          return
+        }
+
+        let divDetalhes = document.createElement("div")
+        divDetalhes.classList.add("detalhes")
+        divDetalhes.classList.add("livro-detalhes")
+
+        divDetalhes.innerHTML = `
+    <p><strong>ISSN:</strong> ${livro.ISSN}</p>
+    <p><strong>Autor:</strong> ${livro.autor}</p>
+    <p><strong>Ano:</strong> ${livro.anoPublicacao}</p>
+    <p><strong>Gênero:</strong> ${livro.genero}</p>
+    <p><strong>Localização:</strong> ${livro.localizacao}</p>
+    <p><strong>Disponibilidade:</strong> ${
+      Number(livro.disponivel) ? "Disponível" : "Não disponível"
+    }</p>
+  `
+
+        divLivro.appendChild(divDetalhes)
       }
 
       /**

@@ -13,12 +13,14 @@ body {
   border-radius: 8px;
 }
 
-h1, h2 {
+h1,
+h2 {
   text-align: center;
   color: #333;
 }
 
-input, button {
+input,
+button {
   display: block;
   width: 100%;
   margin: 6px 0;
@@ -43,4 +45,80 @@ button:hover {
   background: #f0f0f0;
   padding: 15px;
   border-radius: 5px;
+}
+
+.livro {
+  display: grid;
+  grid-template-areas:
+    "titulo botao"
+    "detalhes detalhes";
+
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+
+  gap: 12px 24px;
+  padding: 16px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.livro-titulo {
+  grid-area: titulo;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.livro-botao {
+  grid-area: botao;
+  justify-self: end;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.livro-detalhes {
+  grid-area: detalhes;
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.usuario {
+  display: grid;
+  grid-template-areas:
+    "titulo botao"
+    "detalhes detalhes";
+
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+
+  gap: 12px 24px;
+  padding: 16px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.usuario-titulo {
+  grid-area: titulo;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.usuario-botao {
+  grid-area: botao;
+  justify-self: end;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.usuario-detalhes {
+  grid-area: detalhes;
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
 }

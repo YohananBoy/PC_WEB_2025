@@ -22,6 +22,7 @@
       </section>
     </div>
     <script>
+      //Código escrito por Yohanan
       const btnConsultarUsuarios = document.querySelector("#consultarUsuarios")
       const btnListarTodosUsuarios = document.querySelector("#listarUsuarios")
       const divSaida = document.querySelector("#saidaBusca")
@@ -59,30 +60,54 @@
        */
       function exibeUsuarios(usuarios) {
         divSaida.innerHTML = ""
-        let table = document.createElement("table")
-        table.innerHTML =
-          "<tr><th>Nome</th> <th>Email</th> <th>Senha</th> <th colspan='2'>Ações</th></tr>"
-        table.border = 1
+
         usuarios.forEach((usuario) => {
-          let tr = document.createElement("tr")
-          let nome = document.createElement("td")
+          let divUsuario = document.createElement("div")
+          divUsuario.classList.add("usuario")
+
+          let nome = document.createElement("h3")
           nome.textContent = usuario.nome
-          tr.appendChild(nome)
-          let email = document.createElement("td")
-          email.textContent = usuario.email
-          tr.appendChild(email)
-          let senha = document.createElement("td")
-          senha.textContent = usuario.senha
-          tr.appendChild(senha)
-          let atualizar = document.createElement("td")
-          atualizar.innerHTML = `<a href='cadastrar_usuario.html?id=${usuario.id}'>Atualizar<a>`
-          tr.appendChild(atualizar)
-          let remover = document.createElement("td")
-          remover.innerHTML = `<a href='remover_usuario.html?id=${usuario.id}'>Remover<a>`
-          tr.appendChild(remover)
-          table.appendChild(tr)
+          nome.classList.add("usuario-titulo")
+
+          let btnDetalhes = document.createElement("button")
+          btnDetalhes.textContent = "Mostrar Detalhes"
+          btnDetalhes.classList.add("usuario-botao")
+
+          btnDetalhes.addEventListener("click", () => {
+            mostrarDetalhes(usuario, divUsuario)
+          })
+
+          divUsuario.appendChild(nome)
+          divUsuario.appendChild(btnDetalhes)
+          divSaida.appendChild(divUsuario)
         })
-        divSaida.appendChild(table)
+      }
+
+      /**
+       * Função que exibe todos os atributos de um usuario
+       * caso o usuário clique no botão "Mostar Detalhes"
+       */
+      function mostrarDetalhes(usuario, divUsuario) {
+        let detalhesExistem = divUsuario.querySelector(".usuario-detalhes")
+        if (detalhesExistem) {
+          detalhesExistem.remove()
+          return
+        }
+
+        let divDetalhes = document.createElement("div")
+        divDetalhes.classList.add("detalhes", "usuario-detalhes")
+
+        divDetalhes.innerHTML = `
+    <p><strong>Nome:</strong> ${usuario.nome}</p>
+    <p><strong>Email:</strong> ${usuario.email}</p>
+    <p><strong>Senha:</strong> ${usuario.senha}</p>
+    <p>
+      <a href="cadastrar_usuario.html?id=${usuario.id}">Atualizar</a> |
+      <a href="remover_usuario.html?id=${usuario.id}">Remover</a>
+    </p>
+  `
+
+        divUsuario.appendChild(divDetalhes)
       }
 
       /**
